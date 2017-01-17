@@ -1,8 +1,9 @@
+// Reece Yang
+//
+// This driver class uses the DistantChart class to display an itinerary.
+
 package U5Test;
 
-/**
- * Created by reyan21 on 1/12/2017.
- */
 public class U5Test
 {
     public static void main(String[] args)
@@ -23,3 +24,13 @@ public class U5Test
         }
     }
 }
+
+/*
+The Itinerary
+-------------
+Ames
+Waterloo
+Iowa City
+Burlington
+Ottumwa
+ */

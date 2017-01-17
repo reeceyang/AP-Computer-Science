@@ -1,8 +1,9 @@
+// Reece Yang
+//
+// This class models a distance chart.
+
 package U5Test;
 
-/**
- * Created by reyan21 on 1/12/2017.
- */
 public class DistanceChart
 {
     private String[] cityNames;
@@ -37,19 +38,19 @@ public class DistanceChart
 
     public int findNearestCity(int currentCity)
     {
-        int length = distances.length;
-        int nearestCity = 0;
-        int leastDistance = Integer.MAX_VALUE;
+        int iMin = Integer.MIN_VALUE;
+        int minDist = Integer.MAX_VALUE;
+
+        int length = cityNames.length;
         for (int i = 0; i < length; i++)
         {
-            if (distances[currentCity][i] < leastDistance && i != currentCity)
+            if (distances[currentCity][i] < minDist)
             {
-                nearestCity = i;
-                leastDistance = distances[currentCity][i];
-                distances[currentCity][i] = Integer.MAX_VALUE;
+                iMin = i;
+                minDist = distances[currentCity][i];
             }
         }
-        return nearestCity;
+        return iMin;
     }
 
     public String[] makeItinerary()
@@ -57,12 +58,14 @@ public class DistanceChart
         int length = cityNames.length;
         String[] itinerary = new String[length];
         int currentCity = findRemoteCity();
-        itinerary[0] = cityNames[currentCity];
-        for (int i = 1; i < length; i++)
+        for (int i = 0; i < length; i++)
         {
-            System.out.println(findNearestCity(currentCity));
-            currentCity = findNearestCity(currentCity);
             itinerary[i] = cityNames[currentCity];
+            for (int j = 0; j < length; j++)
+            {
+                distances[j][currentCity] = Integer.MAX_VALUE;
+            }
+            currentCity = findNearestCity(currentCity);
         }
         return itinerary;
     }
