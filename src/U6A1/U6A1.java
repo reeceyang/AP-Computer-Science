@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class U6A1 extends JApplet
 {
-    int[] selectionArray = new int[10000];
-    int[] insertionArray = new int[10000];
+    private int[] selectionArray = new int[10000];
+    private int[] insertionArray = new int[10000];
 
     public void init()
     {
