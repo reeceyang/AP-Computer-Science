@@ -4,20 +4,20 @@
 
 package U7A1;
 
-public class BankAccount
+public class BankAccount1
 {
     private double balance;
     private int accountNumber;
     private static final double interestRate = 0.04;
     private static int lastAssignedAccountNumber = 100;
 
-    public BankAccount()
+    public BankAccount1()
     {
         balance = Math.random() * 1000;
         setAccountNumber();
     }
 
-    public BankAccount(double initialBalance)
+    public BankAccount1(double initialBalance)
     {
         balance = initialBalance;
         setAccountNumber();

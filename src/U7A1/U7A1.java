@@ -1,6 +1,6 @@
 // Reece Yang
 //
-// This is a client program for the BankAccount class.
+// This is a client program for the BankAccount1 class.
 
 package U7A1;
 
@@ -22,8 +22,8 @@ public class U7A1 extends JApplet
         out.append("-------------------\n");
         out.append("\n");
 
-        BankAccount account1 = new BankAccount();
-        BankAccount account2 = new BankAccount(1500);
+        BankAccount1 account1 = new BankAccount1();
+        BankAccount1 account2 = new BankAccount1(1500);
         out.append("Initial Balance for Account "
                 + account1.getAccountNumber()
                 + " = "
