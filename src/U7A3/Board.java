@@ -117,4 +117,33 @@ public class Board
 
 }
 */
-package U7A3;public class Board{}
+package U7A3;
+
+public class Board
+{
+    private Piece[][] pieces;
+    private int boardLength;
+    public Board(int boardLength)
+    {
+        this.boardLength = boardLength;
+        pieces = new Piece[boardLength][boardLength];
+    }
+    public void place(int row, int col, Piece piece)
+    {
+        pieces[row][col] = piece;
+    }
+    public void clear()
+    {
+        for (int i = 0; i < boardLength; i++)
+        {
+            for (int j = 0; j < boardLength; j++)
+            {
+                pieces[i][j] = new Piece(Piece.EMPTY);
+            }
+        }
+    }
+   // public Piece checkForWin()
+//    {
+
+  //  }
+}

@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 public class TicTacToe extends JFrame
 {
     private final JButton[] cells;
+    private final int[] cellHashCodes;
     private final JButton quitButton;
     private final JButton newGameButton;
     private final JTextField jumbotron;
@@ -34,14 +35,14 @@ public class TicTacToe extends JFrame
         jumbotronPanel.setLayout(gL1);
 
         quitButton = new JButton("Quit");
-        class quitActionListener implements ActionListener
+        class QuitActionListener implements ActionListener
         {
             public void actionPerformed(ActionEvent e)
             {
                 System.exit(0);
             }
         }
-        ActionListener quitListener = new quitActionListener();
+        ActionListener quitListener = new QuitActionListener();
         quitButton.addActionListener(quitListener);
         jumbotronPanel.add(quitButton);
 
@@ -49,14 +50,14 @@ public class TicTacToe extends JFrame
         jumbotronPanel.add(jumbotron);
 
         newGameButton = new JButton("New Game");
-        class newGameActionListener implements ActionListener
+        class NewGameActionListener implements ActionListener
         {
             public void actionPerformed(ActionEvent e)
             {
                 jumbotron.setText("New Game Started");
             }
         }
-        ActionListener newGameListener = new newGameActionListener();
+        ActionListener newGameListener = new NewGameActionListener();
         newGameButton.addActionListener(newGameListener);
         jumbotronPanel.add(newGameButton);
 
@@ -67,14 +68,36 @@ public class TicTacToe extends JFrame
         cellPanel.setLayout(gL2);
 
         cells = new JButton[9];
+        cellHashCodes = new int[9];
+        class CellActionListener implements ActionListener
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                JButton clickedButton = (JButton) e.getSource();
+                int clickedButtonHashCode = clickedButton.hashCode();
+                int i;
+                for (i = 0; i < 9; i++)
+                {
+                    if (clickedButtonHashCode == cellHashCodes[i])
+                    {
+                        break;
+                    }
+                }
+                jumbotron.setText("Cell Clicked. Cell Row: " + i / 3 + " Cell Col: " + i % 3);
+            }
+        }
         for (int i = 0; i < 9; i++)
         {
             cells[i] = new JButton("");
+            ActionListener cellListener = new CellActionListener();
+            cells[i].addActionListener(cellListener);
+            cellHashCodes[i] = cells[i].hashCode();
             cellPanel.add(cells[i]);
         }
         windowPanel.add("Center", cellPanel);
 
         setContentPane(windowPanel);
+        setTitle("Tic-Tac-Toe");
         setSize(600, 700);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
