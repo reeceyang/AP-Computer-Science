@@ -127,6 +127,7 @@ public class Board
     {
         this.boardLength = boardLength;
         pieces = new Piece[boardLength][boardLength];
+        clear();
     }
     public void place(int row, int col, Piece piece)
     {
@@ -142,8 +143,56 @@ public class Board
             }
         }
     }
-   // public Piece checkForWin()
-//    {
-
-  //  }
+    public Piece getPiece(int row, int col)
+    {
+        return pieces[row][col];
+    }
+    public Piece[][] getPieces()
+    {
+        return pieces;
+    }
+    public Piece checkForWin()
+    {
+        int winner = 0;
+        // Horizontal
+        for (int i = 0; i < boardLength; i++) {
+            for (int j = 0; j < boardLength - 1; j++) {
+                if (!pieces[i][j].equals(pieces[i][j + 1])) {
+                    break;
+                }
+                if (j + 1 == boardLength - 1) {
+                    winner += pieces[i][0].getType();
+                }
+            }
+        }
+        // Vertical
+        for (int i = 0; i < boardLength; i++) {
+            for (int j = 0; j < boardLength - 1; j++) {
+                if (!pieces[j][i].equals(pieces[j + 1][i])) {
+                    break;
+                }
+                if (j + 1 == boardLength - 1) {
+                    winner += pieces[0][i].getType();
+                }
+            }
+        }
+        // Diagonals
+        for (int i = 0; i < boardLength - 1; i++) {
+            if (!pieces[i][i].equals(pieces[i + 1][i + 1])) {
+                break;
+            }
+            if (i + 1 == boardLength - 1) {
+                winner += pieces[0][0].getType();
+            }
+        }
+        for (int i = 0; i < boardLength - 1; i++) {
+            if (!pieces[i][boardLength - 1 - i].equals(pieces[i + 1][boardLength - 2 - i])) {
+                break;
+            }
+            if (i + 1 == boardLength - 1) {
+                winner += pieces[0][boardLength - 1].getType();
+            }
+        }
+        return new Piece(winner);
+    }
 }
