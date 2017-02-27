@@ -119,7 +119,7 @@ public class TicTacToe extends JFrame
                 //jumbotron.setText("Cell Clicked. Cell Row: " + index / 3 + " Cell Col: " + index % 3);
             }
         }
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < BOARD_LENGTH * BOARD_LENGTH; i++)
         {
             cells[i] = new JButton("");
             ActionListener cellListener = new CellActionListener();
