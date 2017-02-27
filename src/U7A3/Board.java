@@ -139,7 +139,7 @@ public class Board
         {
             for (int j = 0; j < boardLength; j++)
             {
-                pieces[i][j] = new Piece(Piece.EMPTY);
+                pieces[i][j] = Piece.EMPTY;
             }
         }
     }
@@ -194,5 +194,19 @@ public class Board
             }
         }
         return new Piece(winner);
+    }
+    public boolean isFull()
+    {
+        for (int i = 0; i < boardLength; i++)
+        {
+            for (int j = 0; j < boardLength; j++)
+            {
+                if (pieces[i][j].equals(Piece.EMPTY))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

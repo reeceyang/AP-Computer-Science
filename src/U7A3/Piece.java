@@ -27,9 +27,9 @@ package U7A3;
 public class Piece
 {
 	private int type;
-	public static final int EMPTY = 0;
-	public static final int X = 1;
-	public static final int O = 2;
+	public static final Piece EMPTY = new Piece(0);
+	public static final Piece X = new Piece(1);
+	public static final Piece O = new Piece(2);
 
 	public Piece(int type)
 	{
@@ -58,13 +58,13 @@ public class Piece
 		switch(string)
 		{
 			case "":
-				return EMPTY;
+				return 0;
 			case "X":
-				return X;
+				return 1;
 			case "O":
-				return O;
+				return 2;
 			default:
-				return EMPTY;
+				return 0;
 		}
 	}
 
