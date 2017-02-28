@@ -35,6 +35,10 @@ public class Piece
 	{
 		this.type = type;
 	}
+	public Piece(String type)
+	{
+		this.type = stringToType(type);
+	}
 
 	public int getType()
 	{
@@ -73,7 +77,7 @@ public class Piece
 		switch(type)
 		{
 			case 0:
-				return "";
+				return " ";
 			case 1:
 				return "X";
 			case 2:

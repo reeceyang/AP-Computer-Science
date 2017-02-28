@@ -129,6 +129,19 @@ public class Board
         pieces = new Piece[boardLength][boardLength];
         clear();
     }
+    public Board(String string)
+    {
+        boardLength = string.indexOf("\n");
+        pieces = new Piece[boardLength][boardLength];
+        string.replace("\n", "");
+        for (int i = 0; i < boardLength; i++)
+        {
+            for (int j = 0; j < boardLength; j++)
+            {
+                pieces[i][j] = new Piece(string.charAt(i * boardLength + j));
+            }
+        }
+    }
     public void place(int row, int col, Piece piece)
     {
         pieces[row][col] = piece;
@@ -195,6 +208,7 @@ public class Board
         }
         return new Piece(winner);
     }
+    // Checks if the board is filled with non-empty pieces
     public boolean isFull()
     {
         for (int i = 0; i < boardLength; i++)
@@ -208,5 +222,18 @@ public class Board
             }
         }
         return true;
+    }
+    public String toString()
+    {
+        String string = "";
+        for (int i = 0; i < boardLength; i++)
+        {
+            for (int j = 0; j < boardLength; j++)
+            {
+                string += pieces[i][j];
+            }
+            string += "\n";
+        }
+        return string;
     }
 }

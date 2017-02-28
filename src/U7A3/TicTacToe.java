@@ -12,11 +12,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public class TicTacToe extends JFrame
 {
@@ -28,7 +33,7 @@ public class TicTacToe extends JFrame
     private JMenuBar menuBar;
     private JMenu fileMenu;
     private JMenu editMenu;
-    private JPanel jumbotronPanel;
+    private JMenu helpMenu;
     private JPanel windowPanel;
     private JPanel cellPanel;
     private int turn;
@@ -65,6 +70,7 @@ public class TicTacToe extends JFrame
         GridLayout gL2 = new GridLayout(BOARD_LENGTH, BOARD_LENGTH);
         cellPanel.setLayout(gL2);
 
+        // Set turn to 1
         turn = 1;
 
         cells = new JButton[BOARD_LENGTH * BOARD_LENGTH];
@@ -100,7 +106,8 @@ public class TicTacToe extends JFrame
                     if (winner.equals(Piece.EMPTY) && !board.isFull())
                     {
                         // Next turn
-                        jumbotron.setText((mover.toString().equals("X") ? "O" : "X") + jumbotron.getText().substring(1));
+                        jumbotron.setText((mover.toString().equals("X") ? "O" : "X")
+                                + jumbotron.getText().substring(1));
                         turn++;
                     }
                     else
@@ -144,36 +151,16 @@ public class TicTacToe extends JFrame
     private void setMenuBar()
     {
         menuBar = new JMenuBar();
+        // A recyclable menu item
+        JMenuItem menuItem;
+
         fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        menuBar.add(fileMenu);
-        editMenu = new JMenu("Edit");
-        editMenu.setMnemonic(KeyEvent.VK_E);
-        menuBar.add(editMenu);
-    }
-
-    private void setJumbotronPanel()
-    {
-        jumbotronPanel = new JPanel();
-        GridLayout gL1 = new GridLayout(1, 3);
-        jumbotronPanel.setLayout(gL1);
-
-        quitButton = new JButton("Quit");
-        class QuitActionListener implements ActionListener
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                quit();
-            }
-        }
-        ActionListener quitListener = new QuitActionListener();
-        quitButton.addActionListener(quitListener);
-        jumbotronPanel.add(quitButton);
-
-        jumbotron = new JTextField(30);
-        jumbotronPanel.add(jumbotron);
-
-        newGameButton = new JButton("New Game");
+        menuItem = new JMenuItem("New Game", KeyEvent.VK_N);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "Start a new game");
         class NewGameActionListener implements ActionListener
         {
             public void actionPerformed(ActionEvent e)
@@ -181,11 +168,69 @@ public class TicTacToe extends JFrame
                 newGame();
             }
         }
-        ActionListener newGameListener = new NewGameActionListener();
-        newGameButton.addActionListener(newGameListener);
-        jumbotronPanel.add(newGameButton);
+        menuItem.addActionListener(new NewGameActionListener());
+        fileMenu.add(menuItem);
+        menuItem = new JMenuItem("Export Game", KeyEvent.VK_E);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "Export the current game");
+        class ExportGameActionListener implements ActionListener
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                export();
+            }
+        }
+        menuItem.addActionListener(new ExportGameActionListener());
+        fileMenu.add(menuItem);
+        fileMenu.addSeparator();
+        menuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "Quit the game");
+        class QuitActionListener implements ActionListener
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                quit();
+            }
+        }
+        menuItem.addActionListener(new QuitActionListener());
+        fileMenu.add(menuItem);
+        menuBar.add(fileMenu);
 
-        windowPanel.add("North", jumbotronPanel);
+        editMenu = new JMenu("Edit");
+        editMenu.setMnemonic(KeyEvent.VK_E);
+        menuBar.add(editMenu);
+
+        helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic(KeyEvent.VK_H);
+        menuItem = new JMenuItem("About", KeyEvent.VK_A);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_A, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription(
+                "About Tic-Tac-Toe");
+        class AboutActionListener implements ActionListener
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                JOptionPane.showMessageDialog(null,
+                        "Tic-Tac-Toe v1.0 \u00a9 Reece Yang 2017");
+            }
+        }
+        menuItem.addActionListener(new AboutActionListener());
+        helpMenu.add(menuItem);
+        menuBar.add(helpMenu);
+    }
+
+    private void setJumbotronPanel()
+    {
+        jumbotron = new JTextField(30);
+        jumbotron.setHorizontalAlignment(JTextField.CENTER);
+        jumbotron.setEditable(false);
+        windowPanel.add("North", jumbotron);
     }
 
     private void refreshBoard()
@@ -207,6 +252,21 @@ public class TicTacToe extends JFrame
     private void quit()
     {
         System.exit(0);
+    }
+
+    private void export()
+    {
+        try
+        {
+            FileWriter writer = new FileWriter("src/U7A3/board.brd");
+            PrintWriter out = new PrintWriter(writer);
+            out.println(board.toString());
+            out.close();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e.toString());
+        }
     }
 
     public static void main(String[] args)
