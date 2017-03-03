@@ -30,7 +30,7 @@ public class TicTacToe
         String message = winner.getID().equals(" ") ? "The game has tied (Cats Game)."
                 : winner.getID() + " has won the game.";
         System.out.println(message);
-        System.out.println("Press enter to quit.");
+        System.out.print("Press enter to quit.");
         try
         {
             System.in.read();
@@ -39,10 +39,6 @@ public class TicTacToe
         {
             throw new RuntimeException(e.toString());
         }
-    }
-    public static void main(String[] args)
-    {
-        TicTacToe ticTacToe = new TicTacToe();
     }
     public void clearBoard()
     {
@@ -66,7 +62,7 @@ public class TicTacToe
                 {
                     break;
                 }
-                if (j + 1 == boardLength - 1)
+                if (j + 1 == boardLength - 1 && !pieces[i][0].equals(new Piece()))
                 {
                     return pieces[i][0];
                 }
@@ -81,7 +77,7 @@ public class TicTacToe
                 {
                     break;
                 }
-                if (j + 1 == boardLength - 1)
+                if (j + 1 == boardLength - 1 && !pieces[0][i].equals(new Piece()))
                 {
                     return pieces[0][i];
                 }
@@ -94,7 +90,7 @@ public class TicTacToe
             {
                 break;
             }
-            if (i + 1 == boardLength - 1)
+            if (i + 1 == boardLength - 1 && !pieces[0][0].equals(new Piece()))
             {
                 return pieces[0][0];
             }
@@ -105,7 +101,7 @@ public class TicTacToe
             {
                 break;
             }
-            if (i + 1 == boardLength - 1)
+            if (i + 1 == boardLength - 1 && !pieces[0][boardLength - 1].equals(new Piece()))
             {
                 return pieces[0][boardLength - 1];
             }
@@ -114,7 +110,6 @@ public class TicTacToe
     }
     public boolean checkIfBoardIsFull()
     {
-        System.out.println(getNumberOfNonEmptyPieces());
         if (getNumberOfNonEmptyPieces() != boardLength * boardLength) {
             return false;
         }
@@ -123,8 +118,6 @@ public class TicTacToe
     public boolean isEndPosition()
     {
         Piece winner = checkForWin();
-        System.out.println("Winner: " + winner.getID());
-        System.out.println("Board is full? : " + checkIfBoardIsFull());
         if (!winner.equals(new Piece()) || checkIfBoardIsFull())
         {
             return true;
@@ -154,7 +147,7 @@ public class TicTacToe
         boolean inputValid = false;
         while (!inputValid)
         {
-            System.out.println("Please enter the row and column, respectively,"
+            System.out.print("Please enter the row and column, respectively,"
                     + " separated by a space, where you wish to place your piece: ");
             row = in.nextInt();
             col = in.nextInt();
@@ -168,5 +161,9 @@ public class TicTacToe
             }
         }
         board.addPiece(piece, row, col);
+    }
+    public static void main(String[] args)
+    {
+        TicTacToe ticTacToe = new TicTacToe();
     }
 }
