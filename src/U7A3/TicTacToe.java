@@ -4,20 +4,55 @@
 
 package U7A3;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 public class TicTacToe
 {
     private int boardLength;
     private Board board;
+    private int turn = 1;
 
     public TicTacToe()
     {
         boardLength = 3;
         board = new Board(boardLength, boardLength);
+        turn = 1;
+        clearBoard();
+        board.drawBoard();
+        while (!isEndPosition())
+        {
+            getAndHandleInput();
+            board.drawBoard();
+            turn++;
+        }
+        Piece winner = checkForWin();
+        String message = winner.getID().equals(" ") ? "The game has tied (Cats Game)."
+                : winner.getID() + " has won the game.";
+        System.out.println(message);
+        System.out.println("Press enter to quit.");
+        try
+        {
+            System.in.read();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e.toString());
+        }
     }
-
     public static void main(String[] args)
     {
-
+        TicTacToe ticTacToe = new TicTacToe();
+    }
+    public void clearBoard()
+    {
+        for (int i = 0; i < boardLength; i++)
+        {
+            for (int j = 0; j < boardLength; j++)
+            {
+                board.addPiece(new Piece(), i, j);
+            }
+        }
     }
     public Piece checkForWin()
     {
@@ -79,6 +114,59 @@ public class TicTacToe
     }
     public boolean checkIfBoardIsFull()
     {
-
+        System.out.println(getNumberOfNonEmptyPieces());
+        if (getNumberOfNonEmptyPieces() != boardLength * boardLength) {
+            return false;
+        }
+        return true;
+    }
+    public boolean isEndPosition()
+    {
+        Piece winner = checkForWin();
+        System.out.println("Winner: " + winner.getID());
+        System.out.println("Board is full? : " + checkIfBoardIsFull());
+        if (!winner.equals(new Piece()) || checkIfBoardIsFull())
+        {
+            return true;
+        }
+        return false;
+    }
+    public int getNumberOfNonEmptyPieces()
+    {
+        int nonEmptyPieces = 0;
+        for (int i = 0; i < boardLength; i++)
+        {
+            for (int j = 0; j < boardLength; j++)
+            {
+                if (board.isOccupied(i, j))
+                {
+                    nonEmptyPieces++;
+                }
+            }
+        }
+        return nonEmptyPieces;
+    }
+    public void getAndHandleInput()
+    {
+        Piece piece = turn % 2 == 1 ? new Piece("X") : new Piece("O");
+        int row = 0, col = 0;
+        Scanner in = new Scanner(System.in);
+        boolean inputValid = false;
+        while (!inputValid)
+        {
+            System.out.println("Please enter the row and column, respectively,"
+                    + " separated by a space, where you wish to place your piece: ");
+            row = in.nextInt();
+            col = in.nextInt();
+            if (board.isOccupied(row, col))
+            {
+                System.out.println("Sorry, that position has been taken.");
+            }
+            else
+            {
+                inputValid = true;
+            }
+        }
+        board.addPiece(piece, row, col);
     }
 }
