@@ -3,7 +3,7 @@ package U7FreeResponse;
 public class Driver {
     public static void main(String[] args)
     {
-        Store inventory = new Store();
+        /*Store inventory = new Store();
 
         StockItem a = new StockItem("Special K", 1001, 2.35, 12);
         inventory.add(a);
@@ -32,6 +32,11 @@ public class Driver {
 
         inventory.replace(a, new StockItem("Total", 1006, 2.24, 48));
 
-        inventory.list();
+        inventory.list(); */
+
+        StockItem item = new StockItem("asdf", 1234, 1234.0, 15);
+        System.out.println(item);
+        item.remove(18);
+        System.out.println(item);
     }
 }
