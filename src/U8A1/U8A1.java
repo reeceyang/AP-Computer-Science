@@ -28,6 +28,7 @@ public class U8A1 extends JFrame
     public U8A1()
     {
         TestBBPlayer();
+        TestBankAccount();
     }
 
     public void TestBBPlayer()
@@ -71,12 +72,31 @@ public class U8A1 extends JFrame
         DataSet z = new DataSet();
         try
         {
-            Scanner in = new Scanner(new File("myCreditUnion.txt"));
+            Scanner in = new Scanner(new File("src/U8A1/myCreditUnion.txt"));
             while (in.hasNext())
             {
                 String line = in.nextLine();
-                StringTokenizer tokenizer = StringTokenizer(line);
+                StringTokenizer tokenizer = new StringTokenizer(line);
+                num = tokenizer.nextToken();
+                sbal = tokenizer.nextToken();
+                bal = Double.parseDouble(sbal);
+                BankAccount anAccount = new BankAccount(num, bal);
+                z = new DataSet(anAccount);
             }
         }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e.toString());
+        }
+        output.append("\nBankAccount Stats\n");
+        output.append("-----------------\n\n");
+        double bamin, bamax, baave;
+        bamin = z.getMin();
+        bamax = z.getMax();
+        baave = z.getAve();
+        output.append("Minimum Bank Account = " + bamin + "\n\n");
+        output.append("Maximum Bank Account = " + bamax + "\n\n");
+        String x = String.format("%.2f", baave);
+        output.append("Average Bank Account = " + x + "\n\n");
     }
 }
