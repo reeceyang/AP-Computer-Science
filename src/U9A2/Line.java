@@ -9,6 +9,7 @@ import java.awt.Graphics;
 public class Line extends Point
 {
 	private int length;
+    public static final int FONT_SIZE = 16;
 
 	public Line(int x, int y, int length)
 	{
@@ -20,8 +21,8 @@ public class Line extends Point
 	{
 		for (int i = 0; i < length; i++)
 		{
-			setX(getX()+1);
 			drawPoint(g);
+            setX(getX() + FONT_SIZE);
 		}
 	}
 
