@@ -21,8 +21,8 @@ public final class Rectangle extends Line
         for (int i = 0; i < width; i++)
 		{
 			drawLine(g);
-            setY(getY() + FONT_SIZE);
-            setX(getX() - getLength() * FONT_SIZE);
+            setY(getY() + OFFSET);
+            setX(getX() - getLength() * OFFSET);
 		}
     }
 
