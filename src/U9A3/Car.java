@@ -16,23 +16,9 @@ public class Car extends Vehicle
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.red);
-		int[] xCoords = {getInitX() + 5,
-							getInitX() + 15,
-							getInitX() + 15,
-							getInitX() + 20,
-							getInitX() + 20,
-							getInitX(),
-							getInitX(),
-							getInitX() + 5};
-		int[] yCoords = {getInitX(),
-							getInitX(),
-							getInitX() - 5,
-							getInitX() - 5,
-							getInitX() - 10,
-							getInitX() - 10,
-							getInitX() - 5,
-							getInitX() - 5};
-		g.drawPolygon(xCoords, yCoords, 8);
-		g.drawLine(xCoords[7], yCoords[7], xCoords[2], yCoords[2]);
+		g.drawRect(getInitX() + 12, getInitY(), 25, 12);
+		g.drawRect(getInitX(), getInitY() + 12, 50, 12);
+		g.drawOval(getInitX(), getInitY() + 25, 12, 12);
+		g.drawOval(getInitX() + 37, getInitY() + 25, 12, 12);
 	}
 }
