@@ -19,6 +19,8 @@ public class Parallelogram extends Quadrilateral
 	}
 	public double area()
 	{
-		return 0;
+		double height = distance(new Point(botLeft.getX(), topLeft.getY()), botLeft);
+        double base = distance(botLeft, botRight);
+        return base * height;
 	}
 }
